@@ -1,0 +1,95 @@
+##Que es encapsulamiento en java
+{
+=El proceso de ocultar los detalles internos de una clase y exponer solo los métodos necesarios.
+~La capacidad de una clase para heredar métodos y propiedades de otra clase.
+~La capacidad de un objeto para tomar muchas formas diferentes.
+}
+
+##Qué significa la palabra "composición" en Java
+{
+ ~La habilidad de una clase para heredar de múltiples clases.
+ =La práctica de incluir objetos de una clase dentro de otra clase para construir funcionalidades más complejas.
+ ~El proceso de sobrescribir métodos en una clase hija.
+}
+
+##En Java,¿cuál es el propósito de la palabra clave "super" dentro de un método en una subclase?
+{
+~Invocar el constructor de la superclase.
+=Acceder a los métodos de la superclase y llamar al método sobrescrito en la superclase.
+~Acceder a métodos estáticos de la superclase.
+~Crear una nueva instancia de la superclase.
+}
+
+
+##Cuando se utiliza la palabra protected en la declaración de un método o variable en una clase, ¿qué tipo de acceso permite en Java?
+{
+~Solo acceso dentro de la misma clase.
+=Acceso dentro del paquete y por clases que heredan de la clase donde está declarado.
+~Acceso desde cualquier clase en el mismo paquete y desde cualquier subclase, incluso si están en paquetes diferentes.
+}
+
+##Una clase en Java puede ser final y abstract al mismo tiempo{F}.
+
+##Los métodos estáticos en Java se pueden sobrescribir en una subclase{F}.
+
+##Qué código de los siguientes tiene que ver con la herencia
+{
+=public class Componente extends Producto
+~public class Componente inherit Producto
+~public class Componente implements Producto
+~public class Componente belong to Producto
+}
+
+##Qué significa instanciar una clase
+{
+~Duplicar una clase
+~Eliminar una clase
+=Crear un objeto a partir de la clase
+~Conectar dos clases entre sí
+}
+
+##Cual de los siguientes opciones no es un modificador de acceso
+{
+~Private
+~Protected
+~Public
+=Class
+}
+
+##Cuál es el método encargado de inicializar un objeto de una clase
+{
+~Método Main ()
+~Método String
+~Método Getter
+=Método Constructor
+}
+
+##En el código proporcionado, coomplete los espacios vacios del siguiente programa:
+
+abstract class Animal {
+  
+    <<abstract>> void makeSound();
+
+    void sleep() {
+        System.out.println("El animal esta durmiendo");
+    }
+}
+
+class Dog extends Animal {
+   <<@Override>>
+    void makeSound() {
+        System.out.println("Woof! Woof!");
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Dog myDog = new Dog();
+ 
+        myDog.sleep();
+ 
+        myDog.makeSound();
+    }
+}
+
