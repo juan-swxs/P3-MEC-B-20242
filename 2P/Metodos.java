@@ -5,10 +5,14 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.Timer;
 
 public class Metodos extends JFrame{
@@ -21,10 +25,12 @@ public class Metodos extends JFrame{
     private JLabel time;
     private Timer cronometro;
     private int segundos = 0;
+    private List <Pacientes> listaRegistro= new ArrayList<>();
+    private JTextArea mostrarDatos; 
     
 
     public Metodos(){        
-        setBounds(600, 250, 400, 500);
+        setBounds(600, 250, 800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Aplicaion EPS");
 
@@ -56,11 +62,45 @@ public class Metodos extends JFrame{
         panel.add(servicio);
     }
 
-    private void botones(){
+    private void botones(){ 
         button = new JButton("Registrar");
         button.setBounds(20, 250, 90, 25);
         panel.add(button);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                registrarDatos();
+            }
+        });
 
+    }
+
+    private void registrarDatos() {
+
+        String cedulaTexto = cedula.getText();
+        String categoriaSeleccionada = (String) categoria.getSelectedItem();
+        String servicioSeleccionado = (String) servicio.getSelectedItem();
+
+        if (cedulaTexto.isEmpty() || categoriaSeleccionada == null || servicioSeleccionado == null) {
+            System.out.println("Por favor complete todos los campos.");
+            return;
+        }
+
+        Pacientes nuevoRegistro = new Pacientes(cedulaTexto, categoriaSeleccionada, servicioSeleccionado);
+        listaRegistro.add(nuevoRegistro);
+
+        System.out.println("Registro guardado:");
+        for (Pacientes registro : listaRegistro) {
+            System.out.println(registro);
+        }
+
+        cedula.setText("");
+        categoria.setSelectedIndex(-1);
+        servicio.setSelectedIndex(-1);
+    }
+
+    private void mostrar(){
+        
     }
 
     private void timer(){
