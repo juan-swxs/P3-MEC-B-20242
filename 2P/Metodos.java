@@ -25,6 +25,7 @@ public class Metodos extends JFrame{
     private JButton button;
     private JLabel time;
     private Timer cronometro;
+    private Timer temporizadorDatos;
     private int segundos = 0;
     private List <String> listaRegistro= new ArrayList<>();
     private JTextArea mostrarDatos; 
@@ -33,7 +34,7 @@ public class Metodos extends JFrame{
     
 
     public Metodos(){        
-        setBounds(600, 250, 800, 600);
+        setBounds(600, 250, 500, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Aplicaion EPS");
 
@@ -46,6 +47,7 @@ public class Metodos extends JFrame{
         botones();
         timer();
         mostrar();
+        iniciarTemporizadorDatos();
     }
     private void panel(){
         panel = new JPanel();
@@ -92,16 +94,16 @@ public class Metodos extends JFrame{
 
     String horaAtencion = obtenerHoraActual();
 
-    String registroConHora = String.format("Cédula: %s, Categoría: %s, Servicio: %s, Hora: %s",
+    String registroConHora = String.format("Cédula: %s\nCategoría: %s\nServicio: %s\nHora: %s\n",
             cedulaTexto, categoriaSeleccionada, servicioSeleccionado, horaAtencion);
+            
+    listaRegistro.add(registroConHora);
 
-    if (listaRegistro.isEmpty()) {
+    if (listaRegistro.size() == 1) {
         mostrarDatos.setText(registroConHora);
     } else {
         listaCompleta.append(registroConHora + "\n");
     }
-
-    listaRegistro.add(registroConHora);
 
 
     cedula.setText("");
@@ -123,9 +125,9 @@ public class Metodos extends JFrame{
         listaCompleta.setLineWrap(true); 
         listaCompleta.setWrapStyleWord(true); 
 
-        mostrarDatos.setBounds(320, 32, 200, 150);
+        mostrarDatos.setBounds(250, 32, 200, 150);
         scrollPaneLista = new JScrollPane(listaCompleta);
-        scrollPaneLista.setBounds(250, 200, 400, 300);
+        scrollPaneLista.setBounds(250, 200, 200, 300);
 
         panel.add(mostrarDatos);
         panel.add(scrollPaneLista);
@@ -159,5 +161,29 @@ public class Metodos extends JFrame{
 
         String tiempoFormat = String.format("%02d:%02d:%02d", horas, minutos, seg);
         time.setText(tiempoFormat);
+    }
+
+    private void iniciarTemporizadorDatos(){
+        temporizadorDatos = new Timer(20000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!listaRegistro.isEmpty()) {
+                    listaRegistro.remove(0);
+
+                    if (!listaRegistro.isEmpty()) {
+                        mostrarDatos.setText(listaRegistro.get(0));
+            
+                        listaCompleta.setText("");
+                        for (String registro : listaRegistro) {
+                            listaCompleta.append(registro + "\n");
+                        }
+                    } else {
+                        mostrarDatos.setText("");
+                        listaCompleta.setText("");
+                    }
+                }
+            }
+        });
+        temporizadorDatos.start();
     }
 }
