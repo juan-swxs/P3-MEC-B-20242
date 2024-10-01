@@ -24,6 +24,7 @@ public class Metodos extends JFrame{
     private JComboBox <String> servicio;
     private JButton button;
     private JLabel time;
+    private JLabel cc;
     private Timer cronometro;
     private Timer temporizadorDatos;
     private int segundos = 0;
@@ -56,8 +57,11 @@ public class Metodos extends JFrame{
         panel = new JPanel();
         panel.setLayout(null);
         this.getContentPane().add(panel);
+
     }
     private void ingresoDatos(){
+        cc = new JLabel("Cedula");
+        cc.setBounds(20, 18, 40, 20);
         categoria =  new JComboBox<>(new String[]{"Menor de 60", "Adulto mayor", "Discapacidad" });
         categoria.setSelectedIndex(-1);
         categoria.setBounds(20, 120, 140, 25);
@@ -69,6 +73,7 @@ public class Metodos extends JFrame{
         panel.add(cedula);
         panel.add(categoria);
         panel.add(servicio);
+        panel.add(cc);
     }
 
     private void botones(){ 
