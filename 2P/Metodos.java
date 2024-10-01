@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -13,8 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class Metodos extends JFrame{
     
@@ -31,10 +33,11 @@ public class Metodos extends JFrame{
     private JTextArea mostrarDatos; 
     private JTextArea listaCompleta;
     private JScrollPane scrollPaneLista;
+    private JSlider slider;
     
 
     public Metodos(){        
-        setBounds(600, 250, 500, 600);
+        setBounds(600, 250, 500, 550);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Aplicaion EPS");
 
@@ -47,7 +50,9 @@ public class Metodos extends JFrame{
         botones();
         timer();
         mostrar();
+        colocarSlider();
         iniciarTemporizadorDatos();
+        
     }
     private void panel(){
         panel = new JPanel();
@@ -96,7 +101,7 @@ public class Metodos extends JFrame{
 
     String registroConHora = String.format("Cédula: %s\nCategoría: %s\nServicio: %s\nHora: %s\n",
             cedulaTexto, categoriaSeleccionada, servicioSeleccionado, horaAtencion);
-            
+
     listaRegistro.add(registroConHora);
 
     if (listaRegistro.size() == 1) {
@@ -184,6 +189,24 @@ public class Metodos extends JFrame{
                 }
             }
         });
+
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                temporizadorDatos.setDelay(slider.getValue());
+            }
+        });
+
         temporizadorDatos.start();
+    }
+
+    private void colocarSlider(){
+        slider = new JSlider(JSlider.HORIZONTAL, 10, 1000, 500);
+        slider.setInverted(true);
+        slider.setBounds(12, 320, 230, 50);
+        slider.setMajorTickSpacing(160);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        panel.add(slider);
     }
 }
