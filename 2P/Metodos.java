@@ -5,6 +5,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -25,8 +26,10 @@ public class Metodos extends JFrame{
     private JLabel time;
     private Timer cronometro;
     private int segundos = 0;
-    private List <Pacientes> listaRegistro= new ArrayList<>();
+    private List <String> listaRegistro= new ArrayList<>();
     private JTextArea mostrarDatos; 
+    private JTextArea listaCompleta;
+    private JScrollPane scrollPaneLista;
     
 
     public Metodos(){        
@@ -42,6 +45,7 @@ public class Metodos extends JFrame{
         ingresoDatos();
         botones();
         timer();
+        mostrar();
     }
     private void panel(){
         panel = new JPanel();
@@ -86,21 +90,46 @@ public class Metodos extends JFrame{
             return;
         }
 
-        Pacientes nuevoRegistro = new Pacientes(cedulaTexto, categoriaSeleccionada, servicioSeleccionado);
-        listaRegistro.add(nuevoRegistro);
+    String horaAtencion = obtenerHoraActual();
 
-        System.out.println("Registro guardado:");
-        for (Pacientes registro : listaRegistro) {
-            System.out.println(registro);
-        }
+    String registroConHora = String.format("Cédula: %s, Categoría: %s, Servicio: %s, Hora: %s",
+            cedulaTexto, categoriaSeleccionada, servicioSeleccionado, horaAtencion);
 
-        cedula.setText("");
-        categoria.setSelectedIndex(-1);
-        servicio.setSelectedIndex(-1);
+    if (listaRegistro.isEmpty()) {
+        mostrarDatos.setText(registroConHora);
+    } else {
+        listaCompleta.append(registroConHora + "\n");
+    }
+
+    listaRegistro.add(registroConHora);
+
+
+    cedula.setText("");
+    categoria.setSelectedIndex(-1);
+    servicio.setSelectedIndex(-1);
+}
+
+    private String obtenerHoraActual() {
+        int horas = segundos / 3600;
+        int minutos = (segundos % 3600) / 60;
+        int seg = segundos % 60;
+        return String.format("%02d:%02d:%02d", horas, minutos, seg);
     }
 
     private void mostrar(){
-        
+        mostrarDatos = new JTextArea();
+        listaCompleta = new JTextArea();
+        listaCompleta.setEditable(false);
+        listaCompleta.setLineWrap(true); 
+        listaCompleta.setWrapStyleWord(true); 
+
+        mostrarDatos.setBounds(320, 32, 200, 150);
+        scrollPaneLista = new JScrollPane(listaCompleta);
+        scrollPaneLista.setBounds(250, 200, 400, 300);
+
+        panel.add(mostrarDatos);
+        panel.add(scrollPaneLista);
+
     }
 
     private void timer(){
