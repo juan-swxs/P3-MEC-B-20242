@@ -1,5 +1,3 @@
-package Ejercicio;
-
 public class Pacientes {
     private String cedula;
     private String categoria;
